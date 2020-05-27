@@ -39,7 +39,6 @@ def plot_confidence_ellipse_cov():
     lambda_[2:4] = lambda_2
     angle[1] = np.arctan2(*v[:, 0][::-1])
 
-
     fig, axs = plt.subplots(1, 2, figsize=(6, 3))
     for i, ax in enumerate(axs):# ax in axs:
         ax.scatter(sig[:, i*2], sig[:, i*2+1], s=0.9)
@@ -50,12 +49,15 @@ def plot_confidence_ellipse_cov():
         ell = Ellipse(xy=(sig_mean[i*2], sig_mean[i*2+1]),
                     width=lambda_[i*2] * 6, height=lambda_[i*2+1] * 6,
                     angle=np.rad2deg(angle[i]), edgecolor='firebrick', label=r'$3\sigma$')
+        ell.set(label=r'$3\sigma$')
         ax.add_artist(ell)
         ell.set_facecolor('none')
-        #ell.set_clip_box(ax.bbox)
-        #ell.set_alpha(0.2)#np.random.rand())
+        ax.set(xlim=[-10, 10], ylim=[-10, 10], aspect='equal')
         ax.scatter(sig_mean[i*2], sig_mean[i*2+1], c='red', s=3)
-
+        if i == 0:
+            ax.set_title('cov state var')
+        else:
+            ax.set_title('cov output var')
     plt.show()
 
 
